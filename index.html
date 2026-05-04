@@ -1365,12 +1365,15 @@ function toast(msg,type='ti'){
   setTimeout(()=>{t.style.animation='tout .3s ease forwards';setTimeout(()=>t.remove(),300);},3500);
 }
 
+const _modalFns = {};
 function showModal(title,body,btns=[]){
+  Object.keys(_modalFns).forEach(k=>delete _modalFns[k]);
+  btns.forEach((b,i)=>_modalFns['fn'+i]=b.fn);
   document.getElementById('modals').innerHTML=`
     <div class="mov" onclick="if(event.target===this)closeModal()">
       <div class="modal">
         <h3>${esc(title)}</h3><p>${esc(body)}</p>
-        <div class="mbtns">${btns.map(b=>`<button class="btn ${b.c}" onclick="(${b.fn.toString()})()">${b.l}</button>`).join('')}</div>
+        <div class="mbtns">${btns.map((b,i)=>`<button class="btn ${b.c}" onclick="_modalFns['fn${i}']&&_modalFns['fn${i}']()">${b.l}</button>`).join('')}</div>
       </div>
     </div>`;
 }
