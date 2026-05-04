@@ -10,20 +10,14 @@
   <meta property="og:description" content="Submeta pedidos de compras e nós tratamos de tudo — da pesquisa à entrega.">
   <meta property="og:type"        content="website">
 
-  <!-- Favicon panda inline -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><rect width='36' height='36' rx='8' fill='%23f5f5f5'/><circle cx='18' cy='14' r='8.2' fill='%231a1310'/><circle cx='18' cy='14' r='7.2' fill='white'/><circle cx='10.8' cy='7.2' r='4.6' fill='%231a1310'/><circle cx='25.2' cy='7.2' r='4.6' fill='%231a1310'/><circle cx='10.8' cy='7.2' r='2.4' fill='white'/><circle cx='25.2' cy='7.2' r='2.4' fill='white'/><ellipse cx='15' cy='14' rx='2.5' ry='3' fill='%231a1310'/><ellipse cx='21' cy='14' rx='2.5' ry='3' fill='%231a1310'/><circle cx='15.7' cy='13.1' r='.8' fill='white'/><circle cx='21.7' cy='13.1' r='.8' fill='white'/><ellipse cx='18' cy='16.2' rx='1.7' ry='1.1' fill='%231a1310'/><circle cx='13' cy='17' r='2.1' fill='%23e8607a' opacity='.5'/><circle cx='23' cy='17' r='2.1' fill='%23e8607a' opacity='.5'/></svg>">
 
-  <!-- Supabase SDK (browser, CDN) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com">
   <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&f[]=cabinet-grotesk@700,800&display=swap" rel="stylesheet">
 
 <style>
-/* ════════════════════════════════════════════════════════════════
-   TOKENS — Paleta Bao Bao Club
-   ════════════════════════════════════════════════════════════════ */
 :root {
   --c500:#e8607a; --c600:#d44567; --c700:#b33054;
   --c800:#8f2042; --c900:#6b1230;
@@ -31,8 +25,6 @@
   --n900:#1a1310; --n800:#2d2622; --n700:#4a4340;
   --n600:#6b635f; --n500:#8e8682; --n400:#b0aaa6;
   --n300:#cfc9c4; --n200:#e6e1dc; --n100:#f4f1ec; --n50:#faf9f7;
-
-  /* Light */
   --bg:var(--n50); --bg-card:#fff; --bg-sb:#fff;
   --bg-in:var(--n100); --bg-hv:var(--c50);
   --bd:var(--n200); --bd-f:var(--c500);
@@ -53,10 +45,6 @@
   --sh-md:0 4px 16px rgba(0,0,0,.55);
   --sh-lg:0 16px 48px rgba(0,0,0,.65);
 }
-
-/* ════════════════════════════════════════════════════════════════
-   BASE
-   ════════════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{
@@ -71,10 +59,6 @@ button{cursor:pointer;font-family:inherit}
 input,select,textarea{font-family:inherit;color:var(--tx)}
 img{max-width:100%;display:block}
 .hidden{display:none!important}
-
-/* ════════════════════════════════════════════════════════════════
-   BOTÕES
-   ════════════════════════════════════════════════════════════════ */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:10px 20px;border-radius:var(--rs);border:none;
@@ -99,8 +83,6 @@ img{max-width:100%;display:block}
 .btn-xl{padding:15px 34px;font-size:16px;font-weight:700;border-radius:var(--r)}
 .btn:disabled{opacity:.42;pointer-events:none}
 .w-full{width:100%}
-
-/* Toggle tema */
 .tbtn{
   width:36px;height:36px;border-radius:var(--rs);
   background:var(--bg-in);border:1px solid var(--bd);
@@ -108,10 +90,6 @@ img{max-width:100%;display:block}
   font-size:15px;cursor:pointer;transition:background .15s;flex-shrink:0
 }
 .tbtn:hover{background:var(--bd)}
-
-/* ════════════════════════════════════════════════════════════════
-   FORMULÁRIOS
-   ════════════════════════════════════════════════════════════════ */
 .fg{display:flex;flex-direction:column;gap:6px}
 .fl{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.07em}
 .fi{
@@ -125,10 +103,6 @@ img{max-width:100%;display:block}
 textarea.fi{resize:vertical;min-height:86px}
 .fhint{font-size:12px;color:var(--tx3)}
 .ferr{font-size:12px;color:#ef4444;font-weight:600}
-
-/* ════════════════════════════════════════════════════════════════
-   CARDS & BADGES
-   ════════════════════════════════════════════════════════════════ */
 .card{
   background:var(--bg-card);border:1px solid var(--bd);
   border-radius:var(--r);padding:22px;
@@ -145,10 +119,6 @@ textarea.fi{resize:vertical;min-height:86px}
 [data-theme="dark"] .ba{background:#0d1f4a;color:#93c5fd}
 [data-theme="dark"] .bd2{background:#052e16;color:#4ade80}
 [data-theme="dark"] .bc{background:#3f1515;color:#f87171}
-
-/* ════════════════════════════════════════════════════════════════
-   TOAST
-   ════════════════════════════════════════════════════════════════ */
 #toasts{position:fixed;top:18px;right:18px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{
   background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);
@@ -161,20 +131,12 @@ textarea.fi{resize:vertical;min-height:86px}
 .toast.ti{border-left:3px solid var(--ac)}
 @keyframes tin {from{transform:translateX(110%);opacity:0}to{transform:none;opacity:1}}
 @keyframes tout{to  {transform:translateX(110%);opacity:0}}
-
-/* ════════════════════════════════════════════════════════════════
-   MODAL
-   ════════════════════════════════════════════════════════════════ */
 .mov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
 .modal{background:var(--bg-card);border-radius:var(--rl);padding:28px;max-width:420px;width:100%;box-shadow:var(--sh-lg);animation:mup .22s ease;transition:background .25s}
 .modal h3{font-size:20px;font-weight:800;margin-bottom:10px}
 .modal p{color:var(--tx2);font-size:14px;line-height:1.6;margin-bottom:24px}
 .mbtns{display:flex;gap:10px;justify-content:flex-end}
 @keyframes mup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* ════════════════════════════════════════════════════════════════
-   LOADING SCREEN
-   ════════════════════════════════════════════════════════════════ */
 #loading{
   position:fixed;inset:0;background:var(--bg);z-index:9998;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
@@ -182,14 +144,8 @@ textarea.fi{resize:vertical;min-height:86px}
 }
 .spin{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:sp .7s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-
-/* Skeleton */
 .skel{background:linear-gradient(90deg,var(--bg-in) 25%,var(--bd) 50%,var(--bg-in) 75%);background-size:200% 100%;animation:sk 1.5s infinite;border-radius:var(--rs)}
 @keyframes sk{to{background-position:-200% 0}}
-
-/* ════════════════════════════════════════════════════════════════
-   LANDING
-   ════════════════════════════════════════════════════════════════ */
 .landing{min-height:100vh;display:flex;flex-direction:column}
 .lnav{display:flex;align-items:center;justify-content:space-between;padding:16px 64px;border-bottom:1px solid var(--bd);background:var(--bg-card);position:sticky;top:0;z-index:50;transition:background .25s,border-color .25s}
 .lbrand{display:flex;align-items:center;gap:12px}
@@ -246,10 +202,6 @@ textarea.fi{resize:vertical;min-height:86px}
 .lfbrand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--tx2)}
 .lflinks{display:flex;gap:20px}
 .lflinks a:hover{color:var(--ac)}
-
-/* ════════════════════════════════════════════════════════════════
-   AUTH
-   ════════════════════════════════════════════════════════════════ */
 .apg{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
 .al{background:linear-gradient(150deg,var(--c900),var(--c600) 50%,var(--c500) 100%);display:flex;align-items:center;justify-content:center;padding:60px 52px;position:relative;overflow:hidden}
 .al::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 20% 80%,rgba(255,255,255,.07),transparent 50%)}
@@ -273,10 +225,6 @@ textarea.fi{resize:vertical;min-height:86px}
 .adiv::before,.adiv::after{content:'';position:absolute;top:50%;width:calc(50% - 18px);height:1px;background:var(--bd)}
 .adiv::before{left:0}.adiv::after{right:0}
 .dbox{margin-top:20px;padding:13px 15px;background:var(--bg-in);border-radius:var(--rs);font-size:12px;color:var(--tx3);line-height:1.9;border:1px solid var(--bd)}
-
-/* ════════════════════════════════════════════════════════════════
-   APP SHELL
-   ════════════════════════════════════════════════════════════════ */
 .app{display:flex;min-height:100vh}
 .sb{width:var(--sw);background:var(--bg-sb);border-right:1px solid var(--bd);position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:100;transition:transform .3s ease,background .25s,border-color .25s}
 .sb-hd{padding:18px 18px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:11px}
@@ -330,8 +278,6 @@ textarea.fi{resize:vertical;min-height:86px}
 .ei{font-size:58px;margin-bottom:16px;opacity:.35}
 .eh{font-size:18px;font-weight:800;margin-bottom:8px}
 .ep{color:var(--tx2);font-size:14px;max-width:275px;margin-bottom:20px;line-height:1.6}
-
-/* Wizard */
 .wiz{display:flex;align-items:flex-start;margin-bottom:26px}
 .wi{display:flex;align-items:flex-start;flex:1}
 .wicol{display:flex;flex-direction:column;align-items:center}
@@ -374,10 +320,6 @@ textarea.fi{resize:vertical;min-height:86px}
 .btic{font-size:19px}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
-
-/* ════════════════════════════════════════════════════════════════
-   RESPONSIVE
-   ════════════════════════════════════════════════════════════════ */
 @media(max-width:1100px){.lnav,.lfoot{padding-left:36px;padding-right:36px}.lsec,.lcta{padding-left:36px;padding-right:36px}.hero-l{padding:60px 40px 60px 48px}.fgrid{grid-template-columns:1fr 1fr}.ssgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){.hero{grid-template-columns:1fr}.hero-r{display:none}.hero-l{padding:60px 36px}}
 @media(max-width:768px){
@@ -396,9 +338,8 @@ textarea.fi{resize:vertical;min-height:86px}
 </head>
 <body>
 
-<!-- Loading inicial -->
 <div id="loading">
-  <div style="margin-bottom:8px"><!-- logo inline --><svg width="52" height="52" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;overflow:hidden"><rect width="36" height="36" fill="#f5f5f5"/><ellipse cx="18" cy="23" rx="10" ry="9" fill="#1a1310"/><ellipse cx="18" cy="23" rx="8.8" ry="7.8" fill="#fff"/><circle cx="18" cy="14" r="8.2" fill="#1a1310"/><circle cx="18" cy="14" r="7.2" fill="#fff"/><circle cx="10.8" cy="7.2" r="4.6" fill="#1a1310"/><circle cx="25.2" cy="7.2" r="4.6" fill="#1a1310"/><circle cx="10.8" cy="7.2" r="2.4" fill="#f5f5f5"/><circle cx="25.2" cy="7.2" r="2.4" fill="#f5f5f5"/><ellipse cx="15" cy="14" rx="2.5" ry="3" fill="#1a1310"/><ellipse cx="21" cy="14" rx="2.5" ry="3" fill="#1a1310"/><circle cx="15.7" cy="13.1" r=".8" fill="white"/><circle cx="21.7" cy="13.1" r=".8" fill="white"/><ellipse cx="18" cy="16.2" rx="1.7" ry="1.1" fill="#1a1310"/><circle cx="13" cy="17" r="2.1" fill="#e8607a" opacity=".42"/><circle cx="23" cy="17" r="2.1" fill="#e8607a" opacity=".42"/></svg></div>
+  <div style="margin-bottom:8px"><svg width="52" height="52" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;overflow:hidden"><rect width="36" height="36" fill="#f5f5f5"/><ellipse cx="18" cy="23" rx="10" ry="9" fill="#1a1310"/><ellipse cx="18" cy="23" rx="8.8" ry="7.8" fill="#fff"/><circle cx="18" cy="14" r="8.2" fill="#1a1310"/><circle cx="18" cy="14" r="7.2" fill="#fff"/><circle cx="10.8" cy="7.2" r="4.6" fill="#1a1310"/><circle cx="25.2" cy="7.2" r="4.6" fill="#1a1310"/><circle cx="10.8" cy="7.2" r="2.4" fill="#f5f5f5"/><circle cx="25.2" cy="7.2" r="2.4" fill="#f5f5f5"/><ellipse cx="15" cy="14" rx="2.5" ry="3" fill="#1a1310"/><ellipse cx="21" cy="14" rx="2.5" ry="3" fill="#1a1310"/><circle cx="15.7" cy="13.1" r=".8" fill="white"/><circle cx="21.7" cy="13.1" r=".8" fill="white"/><ellipse cx="18" cy="16.2" rx="1.7" ry="1.1" fill="#1a1310"/><circle cx="13" cy="17" r="2.1" fill="#e8607a" opacity=".42"/><circle cx="23" cy="17" r="2.1" fill="#e8607a" opacity=".42"/></svg></div>
   <div class="spin"></div>
   <div style="font-size:13px;color:var(--tx3)">A carregar...</div>
 </div>
@@ -408,34 +349,32 @@ textarea.fi{resize:vertical;min-height:86px}
 <div id="app"></div>
 
 <script>
-/* ════════════════════════════════════════════════════════════════
-   SUPABASE — Inicialização
-   ════════════════════════════════════════════════════════════════ */
 const SUPA_URL = 'https://tltvftjxgmviepcguswx.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRsdHZmdGp4Z212aWVwY2d1c3d4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5MTI4MDMsImV4cCI6MjA5MzQ4ODgwM30.o5WN0GAY4c6ZBgsemGqCRB7rU7ffzEVVypDiX8bQZCU';
-
 const { createClient } = supabase;
 const db = createClient(SUPA_URL, SUPA_KEY);
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    ESTADO
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 const S = {
-  user:    null,   // sessão Supabase Auth
-  profile: null,   // linha da tabela profiles
+  user:    null,
+  profile: null,
   page:    '',
-  oid:     null,   // order id em detalhe
+  oid:     null,
   sopen:   false,
   theme:   'light',
   step:    1,
   draft:   {},
-  orders:  [],     // cache local dos pedidos
-  loading: false
+  orders:  [],
+  loading: false,
+  // FIX: guarda o id do pedido em edição no estado, não em window
+  editingId: null
 };
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    SVG LOGO
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function logo(sz = 36) {
   const r = Math.round(sz * 0.25);
   return `<svg width="${sz}" height="${sz}" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;border-radius:${r}px;overflow:hidden">
@@ -458,29 +397,35 @@ function logo(sz = 36) {
 </svg>`;
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    ROUTER
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 const go = h => { window.location.hash = h; };
 
 window.addEventListener('hashchange', render);
 
+// FIX: flag para evitar que onAuthStateChange e o load inicial renderizem em simultâneo
+let _authReady = false;
+
 window.addEventListener('load', async () => {
-  // Restaurar tema
   const t = localStorage.getItem('bbc-theme');
   if (t === 'dark' || t === 'light') S.theme = t;
   applyTheme(false);
 
-  // Verificar sessão existente
   const { data: { session } } = await db.auth.getSession();
   if (session) {
     S.user = session.user;
     await loadProfile();
   }
 
-  // Ouvir mudanças de auth
+  // FIX: onAuthStateChange só actua após o load inicial ter terminado
+  _authReady = true;
+
   db.auth.onAuthStateChange(async (event, session) => {
+    if (!_authReady) return;
     if (event === 'SIGNED_IN') {
+      // Evitar re-render se já estávamos autenticados (e.g. refresh de token)
+      if (S.user && S.user.id === session.user.id) return;
       S.user = session.user;
       await loadProfile();
       go('dashboard');
@@ -493,7 +438,7 @@ window.addEventListener('load', async () => {
   });
 
   hideLoading();
-  render();
+  await render();
 });
 
 function hideLoading() {
@@ -502,6 +447,7 @@ function hideLoading() {
 }
 
 async function loadProfile() {
+  if (!S.user) return;
   const { data } = await db.from('profiles').select('*').eq('id', S.user.id).single();
   if (data) S.profile = data;
 }
@@ -510,6 +456,7 @@ async function render() {
   const h = window.location.hash.replace('#','') || '';
   S.page = h;
   const app = document.getElementById('app');
+  if (!app) return;
 
   if (!S.user) {
     if (h === 'registo') { app.innerHTML = tRegisto(); bindRegisto(); return; }
@@ -521,6 +468,7 @@ async function render() {
 
   app.innerHTML = tShell();
   const m = document.getElementById('pm');
+  if (!m) return;
 
   if      (h === 'dashboard')        { await loadOrders(); m.innerHTML = tDash(); }
   else if (h === 'novo-pedido')      { m.innerHTML = tNovoForm(); initStep(); }
@@ -532,9 +480,9 @@ async function render() {
   syncNav(); syncTbtn();
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    TEMA
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function toggleTheme() {
   S.theme = S.theme === 'light' ? 'dark' : 'light';
   applyTheme(true);
@@ -549,11 +497,9 @@ function syncTbtn() {
   document.querySelectorAll('.tbtn').forEach(b => b.textContent = ico);
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    SUPABASE — Operações de dados
-   ════════════════════════════════════════════════════════════════ */
-
-// Carregar pedidos do utilizador
+═══════════════════════════════════════════════ */
 async function loadOrders() {
   const { data, error } = await db
     .from('orders')
@@ -563,7 +509,6 @@ async function loadOrders() {
   if (!error) S.orders = data || [];
 }
 
-// Carregar um pedido específico
 async function loadOrderDetail() {
   const { data } = await db.from('orders').select('*').eq('id', S.oid).single();
   if (data) {
@@ -573,7 +518,6 @@ async function loadOrderDetail() {
   }
 }
 
-// Carregar todos os pedidos (admin)
 async function loadAllOrders() {
   const { data, error } = await db
     .from('orders')
@@ -582,26 +526,11 @@ async function loadAllOrders() {
   if (!error) S.orders = data || [];
 }
 
-// Criar pedido
-async function createOrder(payload) {
-  const { data, error } = await db.from('orders').insert([payload]).select().single();
-  if (error) throw error;
-  return data;
-}
-
-// Atualizar pedido
 async function updateOrder(id, payload) {
   const { error } = await db.from('orders').update(payload).eq('id', id);
   if (error) throw error;
 }
 
-// Apagar pedido
-async function deleteOrder(id) {
-  const { error } = await db.from('orders').delete().eq('id', id);
-  if (error) throw error;
-}
-
-// Upload de imagem
 async function uploadImage(file, orderId) {
   const ext = file.name.split('.').pop();
   const path = `${S.user.id}/${orderId || Date.now()}.${ext}`;
@@ -611,9 +540,9 @@ async function uploadImage(file, orderId) {
   return data.publicUrl;
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    LANDING
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tLanding() {
   const ico = S.theme === 'light' ? '🌙' : '☀️';
   return `
@@ -679,9 +608,9 @@ function tLanding() {
 </div>`;
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    AUTH: LOGIN
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tLogin() {
   const ico = S.theme === 'light' ? '🌙' : '☀️';
   return `
@@ -729,15 +658,14 @@ function bindLogin() {
       showE('lg', error.message === 'Invalid login credentials'
         ? 'Email ou password incorretos'
         : 'Erro ao entrar. Tente novamente.');
-      return;
     }
-    // onAuthStateChange trata do resto
+    // FIX: não fazer nada aqui em caso de sucesso — onAuthStateChange trata do redirect
   });
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    AUTH: REGISTO
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tRegisto() {
   const ico = S.theme === 'light' ? '🌙' : '☀️';
   return `
@@ -775,20 +703,19 @@ function bindRegisto() {
     e.preventDefault();
     const nm=v('rn'), em=v('re'), pw=v('rp'), pw2=v('rp2');
     hideE('rg'); let ok=true;
-    if (!nm)                              { showE('rg','Nome obrigatório'); ok=false; }
+    if (!nm)                                { showE('rg','Nome obrigatório'); ok=false; }
     else if (!em||!/\S+@\S+\.\S+/.test(em)) { showE('rg','Email inválido'); ok=false; }
-    else if (!pw||pw.length<6)            { showE('rg','Password: mínimo 6 caracteres'); ok=false; }
-    else if (pw!==pw2)                    { showE('rg','As passwords não coincidem'); ok=false; }
+    else if (!pw||pw.length<6)              { showE('rg','Password: mínimo 6 caracteres'); ok=false; }
+    else if (pw!==pw2)                      { showE('rg','As passwords não coincidem'); ok=false; }
     if (!ok) return;
     const btn = document.getElementById('rbtn');
     btn.disabled=true; btn.textContent='A criar conta...';
-    const { data: signUpData, error } = await db.auth.signUp({
+    const { error } = await db.auth.signUp({
       email: em, password: pw,
       options: { data: { name: nm } }
     });
     if (error) {
       btn.disabled=false; btn.textContent='Criar conta grátis';
-      console.error('Supabase signUp error:', error);
       let msg = 'Erro: ' + error.message;
       if (error.message.includes('already registered') || error.message.includes('User already registered')) msg = 'Este email já está registado';
       else if (error.message.includes('Password should be')) msg = 'Password: mínimo 6 caracteres';
@@ -798,13 +725,13 @@ function bindRegisto() {
       return;
     }
     toast('Conta criada! Bem-vindo 🎉','ts');
-    // onAuthStateChange redireciona automaticamente
+    // FIX: onAuthStateChange redireciona automaticamente — não chamar go() aqui
   });
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    SHELL
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tShell() {
   const p = S.profile || {};
   const name = p.name || S.user?.email?.split('@')[0] || 'Utilizador';
@@ -815,7 +742,7 @@ function tShell() {
 <div class="app">
   <div class="sbov" id="sbov" onclick="closeSb()"></div>
   <aside class="sb" id="sb">
-    <div class="sb-hd">${logo(30)}<div class="sb-nm">Bao Bao <b>Club</b>
+    <div class="sb-hd">${logo(30)}<div class="sb-nm">Bao Bao <b>Club</b><sub>Pedidos de Compras</sub></div></div>
     <nav class="sbnav">
       ${adm ? `
         <div class="sbsec">Admin</div>
@@ -834,8 +761,8 @@ function tShell() {
         <button class="btn btn-g btn-sm" onclick="logout()">Sair</button>
       </div>
       <div class="sb-usr" onclick="go('perfil')">
-        <div class="av">${ini}</div>
-        <div class="sb-ui"><div class="sb-un">${esc(name)}</div><div class="sb-ue">${esc(S.user?.email||'')}</div></div>
+        <div class="av" id="sb-av">${ini}</div>
+        <div class="sb-ui"><div class="sb-un" id="sb-un">${esc(name)}</div><div class="sb-ue">${esc(S.user?.email||'')}</div></div>
         <span style="color:var(--tx3);font-size:14px">›</span>
       </div>
     </div>
@@ -876,11 +803,16 @@ function syncNav() {
 }
 function toggleSb(){S.sopen=!S.sopen;document.getElementById('sb').classList.toggle('open',S.sopen);document.getElementById('sbov').classList.toggle('open',S.sopen);}
 function closeSb(){S.sopen=false;document.getElementById('sb')?.classList.remove('open');document.getElementById('sbov')?.classList.remove('open');}
-async function logout(){await db.auth.signOut();toast('Sessão terminada','ti');S.user=null;S.profile=null;S.orders=[];await render();}
 
-/* ════════════════════════════════════════════════════════════════
+// FIX: logout não chama render() — onAuthStateChange trata de tudo
+async function logout() {
+  await db.auth.signOut();
+  toast('Sessão terminada','ti');
+}
+
+/* ═══════════════════════════════════════════════
    DASHBOARD
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tDash() {
   const name = (S.profile?.name||S.user?.email||'').split(' ')[0];
   const all=S.orders;
@@ -912,9 +844,9 @@ ${all.length===0?`
 `}`;
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    NOVO PEDIDO — Multi-step
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tNovoForm() {
   return `
 <div class="pgh"><h1 class="pgh1">Novo pedido</h1><p class="pgs">Preencha os dados do produto que pretende encomendar.</p></div>
@@ -926,8 +858,20 @@ function tNovoForm() {
 }
 
 function initStep() {
-  S.step=1;
-  S.draft={ phone:S.profile?.phone||'', addr:{street:S.profile?.street||'',postal:S.profile?.postal||'',city:S.profile?.city||'',country:S.profile?.country||'Portugal'}, imgFile:null };
+  S.step = 1;
+  S.editingId = null;
+  // FIX: verificar que S.profile existe antes de usar os seus campos
+  const p = S.profile || {};
+  S.draft = {
+    phone: p.phone || '',
+    addr: {
+      street:  p.street  || '',
+      postal:  p.postal  || '',
+      city:    p.city    || '',
+      country: p.country || 'Portugal'
+    },
+    imgFile: null
+  };
   drawStep();
 }
 
@@ -945,9 +889,9 @@ function drawStep() {
   W.innerHTML=wizHTML();
   const d=S.draft,a=d.addr||{};
   const countries=['Portugal','Espanha','França','Alemanha','Reino Unido','Itália','Brasil','Outro'];
+  const isEdit = !!S.editingId;
 
   const html=[
-    // Passo 1
     `<div class="step">
       <h3 style="font-size:16px;font-weight:800;margin-bottom:17px">Que produto pretende?</h3>
       <div style="display:flex;flex-direction:column;gap:13px">
@@ -956,7 +900,6 @@ function drawStep() {
         <div class="fg"><label class="fl">Budget máximo (€) *</label><input class="fi" id="fb" type="number" min="1" placeholder="Ex: 150" value="${ea(d.budget||'')}"><div class="fhint">Valor máximo que está disposto a gastar</div><div class="ferr hidden" id="fb-e"></div></div>
       </div>
     </div>`,
-    // Passo 2
     `<div class="step">
       <h3 style="font-size:16px;font-weight:800;margin-bottom:17px">Preferências do produto</h3>
       <div style="display:flex;flex-direction:column;gap:13px">
@@ -965,7 +908,6 @@ function drawStep() {
         <div class="fg"><label class="fl">Telemóvel para contacto *</label><input class="fi" id="fph" type="tel" placeholder="+351 9XX XXX XXX" value="${ea(d.phone||'')}"><div class="ferr hidden" id="fph-e"></div></div>
       </div>
     </div>`,
-    // Passo 3
     `<div class="step">
       <h3 style="font-size:16px;font-weight:800;margin-bottom:17px">Morada de entrega</h3>
       <div style="display:flex;flex-direction:column;gap:13px">
@@ -977,13 +919,12 @@ function drawStep() {
         <div class="fg"><label class="fl">País</label><select class="fi ssel" id="fco" style="appearance:auto">${countries.map(c=>`<option value="${c}" ${(a.country||'Portugal')===c?'selected':''}>${c}</option>`).join('')}</select></div>
       </div>
     </div>`,
-    // Passo 4
     `<div class="step">
       <h3 style="font-size:16px;font-weight:800;margin-bottom:7px">Foto de referência</h3>
       <p style="color:var(--tx2);font-size:14px;margin-bottom:17px">Envie uma foto do produto (PNG, JPG). Opcional mas muito útil!</p>
       <div class="upz" id="upz">
         <input type="file" id="fimg" accept="image/png,image/jpeg,image/webp" onchange="handleImg(event)">
-        <div id="uphint"><div style="font-size:36px;margin-bottom:10px">📸</div><div style="font-weight:700;margin-bottom:4px">Clique ou arraste uma imagem</div><div style="font-size:13px;color:var(--tx3)">PNG, JPG ou WEBP · máx. 5MB</div></div>
+        <div id="uphint"${d.imgPreview?' style="display:none"':''}><div style="font-size:36px;margin-bottom:10px">📸</div><div style="font-weight:700;margin-bottom:4px">Clique ou arraste uma imagem</div><div style="font-size:13px;color:var(--tx3)">PNG, JPG ou WEBP · máx. 5MB</div></div>
         ${d.imgPreview?`<img src="${d.imgPreview}" class="upprev">`:''}
       </div>
       <div style="margin-top:16px;padding:13px;background:var(--ac-lt);border-radius:var(--rs);font-size:14px;color:var(--ac-tx)">
@@ -1001,13 +942,22 @@ function drawStep() {
     z?.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('dov');const f=e.dataTransfer.files[0];if(f)doImg(f);});
   }
 
+  const submitLabel = isEdit ? '✓ Guardar alterações' : '✓ Submeter pedido';
   A.innerHTML=`
     ${S.step>1?`<button class="btn btn-s" onclick="chStep(-1)">← Anterior</button>`:''}
-    ${S.step<4?`<button class="btn btn-p" onclick="chStep(1)">Continuar →</button>`:`<button class="btn btn-p" id="sbtn" onclick="submitOrder()">✓ Submeter pedido</button>`}
+    ${S.step<4
+      ? `<button class="btn btn-p" onclick="chStep(1)">Continuar →</button>`
+      : `<button class="btn btn-p" id="sbtn" onclick="submitOrder()">${submitLabel}</button>`}
   `;
 }
 
-function chStep(dir){if(dir>0&&!valStep())return;if(dir>0)saveStep();S.step=Math.max(1,Math.min(4,S.step+dir));drawStep();}
+// FIX: ao recuar também guarda o passo actual para não perder dados
+function chStep(dir) {
+  if (dir > 0 && !valStep()) return;
+  saveStep();
+  S.step = Math.max(1, Math.min(4, S.step + dir));
+  drawStep();
+}
 
 function valStep(){
   if(S.step===1){
@@ -1034,7 +984,7 @@ function saveStep(){
   const d=S.draft;
   if(S.step===1){d.product_name=v('fn');d.description=v('fd');d.budget=v('fb');}
   else if(S.step===2){d.color=v('fc');d.size=v('fz');d.phone=v('fph');}
-  else if(S.step===3){d.addr={street:v('fst'),postal:v('fps'),city:v('fct'),country:document.getElementById('fco').value};}
+  else if(S.step===3){d.addr={street:v('fst'),postal:v('fps'),city:v('fct'),country:document.getElementById('fco')?.value||'Portugal'};}
 }
 
 function handleImg(e){const f=e.target.files[0];if(f)doImg(f);}
@@ -1046,79 +996,90 @@ function doImg(file){
     S.draft.imgPreview=e.target.result;
     const h=document.getElementById('uphint');if(h)h.style.display='none';
     let p=document.querySelector('.upprev');
-    if(!p){p=document.createElement('img');p.className='upprev';document.getElementById('upz').appendChild(p);}
+    if(!p){p=document.createElement('img');p.className='upprev';document.getElementById('upz')?.appendChild(p);}
     p.src=e.target.result;
     toast('Imagem carregada!','ts');
   };
   r.readAsDataURL(file);
 }
 
-async function submitOrder(){
+// FIX: submitOrder unificado — distingue criação de edição via S.editingId
+async function submitOrder() {
   saveStep();
-  const d=S.draft;
-  if(!d.product_name){toast('Preencha os dados do produto','te');S.step=1;drawStep();return;}
-  const btn=document.getElementById('sbtn');
-  if(btn){btn.disabled=true;btn.textContent='A submeter...';}
-  try {
-    // Verificar sessão antes de submeter
-    const { data: { session } } = await db.auth.getSession();
-    if(!session){ toast('Sessão expirada. Faça login novamente.','te'); go('login'); return; }
+  const d = S.draft;
+  if (!d.product_name) { toast('Preencha os dados do produto','te'); S.step=1; drawStep(); return; }
 
-    const payload={
-      user_id: S.user.id,
+  const btn = document.getElementById('sbtn');
+  if (btn) { btn.disabled=true; btn.textContent='A guardar...'; }
+
+  try {
+    const { data: { session } } = await db.auth.getSession();
+    if (!session) { toast('Sessão expirada. Faça login novamente.','te'); go('login'); return; }
+
+    const payload = {
       product_name: d.product_name,
-      description: d.description||'',
-      budget: d.budget ? Number(d.budget) : null,
-      color: d.color||'',
-      size: d.size||'',
-      phone: d.phone||'',
-      street: (d.addr||{}).street||'',
-      postal: (d.addr||{}).postal||'',
-      city:   (d.addr||{}).city||'',
-      country:(d.addr||{}).country||'Portugal',
-      status: 'pending'
+      description:  d.description || '',
+      budget:       d.budget ? Number(d.budget) : null,
+      color:        d.color  || '',
+      size:         d.size   || '',
+      phone:        d.phone  || '',
+      street:  (d.addr||{}).street  || '',
+      postal:  (d.addr||{}).postal  || '',
+      city:    (d.addr||{}).city    || '',
+      country: (d.addr||{}).country || 'Portugal'
     };
 
-    console.log('Submitting payload:', payload);
-
-    const { data: orderData, error: orderError } = await db.from('orders').insert([payload]).select().single();
-    if(orderError){
-      console.error('Insert error:', orderError);
-      throw orderError;
+    if (S.editingId) {
+      // — EDIÇÃO —
+      if (d.imgFile) {
+        try { const url = await uploadImage(d.imgFile, S.editingId); payload.image_url = url; } catch(imgErr) { console.warn('Imagem não guardada:', imgErr); }
+      }
+      await updateOrder(S.editingId, payload);
+      const idx = S.orders.findIndex(o => o.id === S.editingId);
+      if (idx !== -1) Object.assign(S.orders[idx], payload);
+      const targetId = S.editingId;
+      S.editingId = null;
+      S.draft = {};
+      toast('Pedido atualizado!','ts');
+      S.oid = targetId;
+      go('pedido-' + targetId);
+      await render();
+    } else {
+      // — CRIAÇÃO —
+      payload.user_id = S.user.id;
+      payload.status  = 'pending';
+      const { data: orderData, error: orderError } = await db.from('orders').insert([payload]).select().single();
+      if (orderError) throw orderError;
+      if (d.imgFile) {
+        try { const url = await uploadImage(d.imgFile, orderData.id); await updateOrder(orderData.id, { image_url: url }); } catch(imgErr) { console.warn('Imagem não guardada:', imgErr); }
+      }
+      S.draft = {};
+      toast('Pedido submetido com sucesso! 🎉','ts');
+      await loadOrders();
+      go('dashboard');
+      await render();
     }
-
-    // Upload imagem se existir
-    if(d.imgFile){
-      try {
-        const url = await uploadImage(d.imgFile, orderData.id);
-        await updateOrder(orderData.id, { image_url: url });
-      } catch(imgErr){ console.warn('Imagem não guardada:', imgErr); }
-    }
-    S.draft={};
-    toast('Pedido submetido com sucesso! 🎉','ts');
-    await loadOrders();
-    go('dashboard');
-    await render();
-  } catch(e){
-    if(btn){btn.disabled=false;btn.textContent='✓ Submeter pedido';}
+  } catch(e) {
+    if (btn) { btn.disabled=false; btn.textContent= S.editingId ? '✓ Guardar alterações' : '✓ Submeter pedido'; }
     const msg = e?.message || e?.details || e?.hint || JSON.stringify(e);
     toast('Erro: ' + msg, 'te');
-    console.error('submitOrder error full:', e);
+    console.error('submitOrder error:', e);
   }
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    DETALHE DO PEDIDO
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tDetail(){
   const o=S.orders.find(o=>o.id===S.oid);
   if(!o)return`<div class="empty"><div class="ei">🔍</div><div class="eh">Pedido não encontrado</div><button class="btn btn-p" onclick="go('dashboard')">Voltar</button></div>`;
   const canEdit=o.status==='pending'&&o.user_id===S.user.id;
+  // FIX: passar o id como argumento explícito em vez de data-id+this (mais fiável cross-browser)
   return `
 <div style="margin-bottom:16px"><button class="btn btn-g btn-sm" onclick="go('dashboard')">← Voltar</button></div>
 <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:13px;margin-bottom:20px">
   <div><h1 class="pgh1">${esc(o.product_name)}</h1><div style="display:flex;align-items:center;gap:10px;margin-top:8px">${bdg(o.status)}<span style="color:var(--tx3);font-size:12px">Criado em ${fmtd(o.created_at)}</span></div></div>
-  ${canEdit?`<div style="display:flex;gap:9px"><button class="btn btn-s btn-sm" data-id="${o.id}" onclick="editOrder(this.dataset.id)">✏️ Editar</button><button class="btn btn-d btn-sm" data-id="${o.id}" onclick="confirmDel(this.dataset.id)">🗑️ Apagar</button></div>`:''}
+  ${canEdit?`<div style="display:flex;gap:9px"><button class="btn btn-s btn-sm" onclick="editOrder('${esc(o.id)}')">✏️ Editar</button><button class="btn btn-d btn-sm" onclick="confirmDel('${esc(o.id)}')">🗑️ Apagar</button></div>`:''}
 </div>
 <div class="dgrid">
   <div>
@@ -1139,58 +1100,59 @@ function tDetail(){
 </div>`;
 }
 
-function editOrder(id){
-  const o=S.orders.find(o=>o.id===id);if(!o)return;
-  S.draft={...o,addr:{street:o.street,postal:o.postal,city:o.city,country:o.country},imgPreview:o.image_url,imgFile:null};
-  S.step=1;
-  document.getElementById('pm').innerHTML=`
-    <div style="margin-bottom:16px"><button class="btn btn-g btn-sm" onclick="go('pedido-${id}')">← Cancelar</button></div>
+// FIX: editOrder reescrito — usa S.editingId, não window._eid; usa submitOrder unificado
+function editOrder(id) {
+  const o = S.orders.find(o => o.id === id);
+  if (!o) return;
+
+  S.editingId = id;
+  S.draft = {
+    ...o,
+    addr: { street: o.street, postal: o.postal, city: o.city, country: o.country },
+    imgPreview: o.image_url || null,
+    imgFile: null
+  };
+  S.step = 1;
+
+  const m = document.getElementById('pm');
+  if (!m) return;
+  m.innerHTML = `
+    <div style="margin-bottom:16px"><button class="btn btn-g btn-sm" onclick="cancelEdit('${esc(id)}')">← Cancelar</button></div>
     <div class="pgh"><h1 class="pgh1">Editar pedido</h1></div>
     <div class="card" style="max-width:600px"><div id="wiz"></div><div id="scon"></div><div id="sact" style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px"></div></div>`;
-  window._eid=id; drawStep();
-  const orig=window.submitOrder;
-  window.submitOrder=async()=>{
-    saveStep();const d=S.draft;
-    const btn=document.getElementById('sbtn');if(btn){btn.disabled=true;btn.textContent='A guardar...';}
-    try{
-      const payload={product_name:d.product_name,description:d.description||'',budget:d.budget?Number(d.budget):null,color:d.color||'',size:d.size||'',phone:d.phone||'',street:(d.addr||{}).street||'',postal:(d.addr||{}).postal||'',city:(d.addr||{}).city||'',country:(d.addr||{}).country||'Portugal'};
-      if(d.imgFile){const url=await uploadImage(d.imgFile,window._eid);payload.image_url=url;}
-      await updateOrder(window._eid,payload);
-      const idx=S.orders.findIndex(o=>o.id===window._eid);
-      if(idx!==-1)Object.assign(S.orders[idx],payload);
-      window.submitOrder=orig;window._eid=null;
-      toast('Pedido atualizado!','ts');
-      S.oid=id;
-      go('pedido-'+id);
-      await render();
-    }catch(e){if(btn){btn.disabled=false;btn.textContent='✓ Guardar alterações';}console.error('editOrder error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
-  };
+  drawStep();
 }
 
-function confirmDel(id){
+// FIX: função de cancelar edição separada e limpa
+function cancelEdit(id) {
+  S.editingId = null;
+  S.draft = {};
+  go('pedido-' + id);
+}
+
+function confirmDel(id) {
   showModal('Apagar pedido?','Esta ação não pode ser desfeita.',[
-    {l:'Cancelar',c:'btn-s',fn:closeModal},
-    {l:'Apagar',c:'btn-d',fn:async()=>{
-      try{
-        const {error}=await db.from('orders').delete().eq('id',id);
-        if(error)throw error;
-        S.orders=S.orders.filter(o=>o.id!==id);
+    {l:'Cancelar', c:'btn-s', fn: closeModal},
+    {l:'Apagar',   c:'btn-d', fn: async () => {
+      closeModal();
+      try {
+        const { error } = await db.from('orders').delete().eq('id', id);
+        if (error) throw error;
+        S.orders = S.orders.filter(o => o.id !== id);
         toast('Pedido apagado','ti');
-        closeModal();
         go('dashboard');
         await render();
-      }catch(e){
-        console.error('deleteOrder error:',e);
-        toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');
-        closeModal();
+      } catch(e) {
+        console.error('deleteOrder error:', e);
+        toast('Erro ao apagar: ' + (e?.message || e?.details || JSON.stringify(e)), 'te');
       }
     }}
   ]);
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    PERFIL
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tPerfil(){
   const p=S.profile||{};
   const ini=(p.name||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
@@ -1222,31 +1184,36 @@ function tPerfil(){
 <style>@media(max-width:600px){#pgrid{grid-template-columns:1fr!important}}</style>`;
 }
 
+// FIX: actualiza elementos da sidebar por id específico em vez de querySelector genérico
 async function savePerfil(){
-  const nm=v('pn'),ph=v('pp');
+  const nm=v('pn'), ph=v('pp');
   try{
-    const {error}=await db.from('profiles').update({name:nm||S.profile?.name,phone:ph}).eq('id',S.user.id);
+    const {error}=await db.from('profiles').update({name:nm||S.profile?.name, phone:ph}).eq('id',S.user.id);
     if(error)throw error;
-    if(S.profile){S.profile.name=nm||S.profile.name;S.profile.phone=ph;}
+    if(S.profile){ S.profile.name=nm||S.profile.name; S.profile.phone=ph; }
     toast('Perfil atualizado!','ts');
-    // update sidebar name without full re-render
-    const unEl=document.querySelector('.sb-un');if(unEl)unEl.textContent=S.profile.name;
-    const avEl=document.querySelector('.av');if(avEl)avEl.textContent=(S.profile.name||'').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
-  }catch(e){console.error('savePerfil error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
+    const newName = S.profile?.name || '';
+    const newIni = newName.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const unEl = document.getElementById('sb-un');
+    if (unEl) unEl.textContent = newName;
+    const avEl = document.getElementById('sb-av');
+    if (avEl) avEl.textContent = newIni;
+  }catch(e){ console.error('savePerfil error:',e); toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te'); }
 }
+
 async function saveMorada(){
-  const payload={street:v('pst'),postal:v('pps'),city:v('pct'),country:document.getElementById('pco').value};
+  const payload={street:v('pst'),postal:v('pps'),city:v('pct'),country:document.getElementById('pco')?.value||'Portugal'};
   try{
     const {error}=await db.from('profiles').update(payload).eq('id',S.user.id);
     if(error)throw error;
     if(S.profile)Object.assign(S.profile,payload);
     toast('Morada guardada!','ts');
-  }catch(e){console.error('saveMorada error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
+  }catch(e){ console.error('saveMorada error:',e); toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te'); }
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    PAINEL ADMIN
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 function tAdmin(){
   const all=S.orders;
   const p=all.filter(o=>o.status==='pending').length;
@@ -1269,8 +1236,10 @@ function tAdmin(){
     <button class="btn btn-s btn-sm" id="fd" onclick="filterA('done')">Concluídos</button>
   </div>
 </div>
-${all.length===0?`<div class="empty"><div class="ei">📭</div><div class="eh">Sem pedidos ainda</div></div>`:`
-<div id="alist" style="display:flex;flex-direction:column;gap:10px">${all.map(ac).join('')}</div>`}`;
+${all.length===0
+  ? `<div class="empty"><div class="ei">📭</div><div class="eh">Sem pedidos ainda</div></div>`
+  : `<div id="alist" style="display:flex;flex-direction:column;gap:10px">${all.map(ac).join('')}</div>`
+}`;
 }
 
 function ac(o){
@@ -1279,10 +1248,14 @@ function ac(o){
   const userEmail=prof.email||'—';
   return `
 <div class="ac2" id="ac-${o.id}">
-  <div class="ah" data-id="${o.id}" onclick="toggleA(this.dataset.id)">
+  <div class="ah" onclick="toggleA('${o.id}')">
     <div class="oth">${o.image_url?`<img src="${o.image_url}" alt="">`:'📦'}</div>
     <div class="oin"><div class="on">${esc(o.product_name)}</div><div class="om">${esc(userName)} · ${fmtd(o.created_at)}</div></div>
-    <div style="display:flex;align-items:center;gap:11px;flex-shrink:0">${bdg(o.status)}<div class="opr">€${Number(o.budget||0).toLocaleString('pt-PT')}</div><span id="ar-${o.id}" style="color:var(--tx3);font-size:16px;transition:transform .2s">›</span></div>
+    <div style="display:flex;align-items:center;gap:11px;flex-shrink:0">
+      <span id="abadge-${o.id}">${bdg(o.status)}</span>
+      <div class="opr">€${Number(o.budget||0).toLocaleString('pt-PT')}</div>
+      <span id="ar-${o.id}" style="color:var(--tx3);font-size:16px;transition:transform .2s">›</span>
+    </div>
   </div>
   <div class="ab" id="ab-${o.id}">
     ${o.image_url?`<img src="${o.image_url}" class="aimg" alt="">`:`<div style="height:80px;background:var(--bg-in);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:13px">📦</div>`}
@@ -1303,7 +1276,7 @@ function ac(o){
     </div>
     <div style="margin-top:17px;padding-top:13px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:11px;flex-wrap:wrap">
       <span style="font-size:12px;font-weight:700;color:var(--tx3)">Alterar estado:</span>
-      <select class="ssel" data-id="${o.id}" onchange="setStatus(this.dataset.id,this.value)">
+      <select class="ssel" onchange="setStatus('${o.id}',this.value)">
         <option value="pending"   ${o.status==='pending'  ?'selected':''}>⏳ Pendente</option>
         <option value="analysis"  ${o.status==='analysis' ?'selected':''}>🔍 Em análise</option>
         <option value="done"      ${o.status==='done'     ?'selected':''}>✅ Concluído</option>
@@ -1315,35 +1288,47 @@ function ac(o){
 <style>@media(max-width:560px){#ag-${o.id}{grid-template-columns:1fr!important}}</style>`;
 }
 
-function toggleA(id){const b=document.getElementById('ab-'+id),r=document.getElementById('ar-'+id);const op=b.classList.toggle('open');if(r)r.style.transform=op?'rotate(90deg)':'';}
+// FIX: toggleA recebe id como argumento — não usa data-id+this
+function toggleA(id){
+  const b=document.getElementById('ab-'+id),r=document.getElementById('ar-'+id);
+  const op=b.classList.toggle('open');
+  if(r)r.style.transform=op?'rotate(90deg)':'';
+}
 
-async function setStatus(id,st){
+// FIX: setStatus usa id específico do badge (#abadge-<id>) em vez de selector genérico
+async function setStatus(id, st){
   try{
     const {error}=await db.from('orders').update({status:st}).eq('id',id);
     if(error)throw error;
-    const o=S.orders.find(o=>o.id===id);if(o)o.status=st;
-    const c=document.getElementById('ac-'+id);if(c){const b=c.querySelector('.ah .badge');if(b)b.outerHTML=bdg(st);}
+    const o=S.orders.find(o=>o.id===id);
+    if(o) o.status=st;
+    // FIX: actualizar badge pelo id específico
+    const badgeEl=document.getElementById('abadge-'+id);
+    if(badgeEl) badgeEl.innerHTML=bdg(st);
     toast('Estado: '+stLbl(st),'ts');
-  }catch(e){console.error('setStatus error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
+  }catch(e){ console.error('setStatus error:',e); toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te'); }
 }
 
-async function filterA(st){
+// FIX: filterA aplica filtro sobre a lista já carregada, sem re-fetch desnecessário
+async function filterA(st) {
   await loadAllOrders();
-  const f=st?S.orders.filter(o=>o.status===st):S.orders;
-  const c=document.getElementById('alist');
-  if(c)c.innerHTML=f.length?f.map(ac).join(''):`<div class="empty"><div class="ei">📭</div><div class="eh">Sem pedidos aqui</div></div>`;
+  const f = st ? S.orders.filter(o => o.status === st) : S.orders;
+  const c = document.getElementById('alist');
+  if (c) c.innerHTML = f.length
+    ? f.map(ac).join('')
+    : `<div class="empty"><div class="ei">📭</div><div class="eh">Sem pedidos aqui</div></div>`;
   [['fa',''],['fp','pending'],['fan','analysis'],['fd','done']].forEach(([id,s])=>{
     const el=document.getElementById(id);
-    if(el)el.className=s===st?'btn btn-p btn-sm':'btn btn-s btn-sm';
+    if(el) el.className = s===st ? 'btn btn-p btn-sm' : 'btn btn-s btn-sm';
   });
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
    UTILITÁRIOS
-   ════════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════ */
 const esc  = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const ea   = s => esc(s);
-const v    = id => { const el=document.getElementById(id); return el?el.value.trim():''; };
+const v    = id => { const el=document.getElementById(id); return el ? el.value.trim() : ''; };
 const fmtd = d  => new Date(d).toLocaleDateString('pt-PT',{day:'2-digit',month:'short',year:'numeric'});
 const stLbl= s  => ({pending:'Pendente',analysis:'Em análise',done:'Concluído',cancelled:'Cancelado'}[s]||s);
 
@@ -1358,6 +1343,7 @@ function hideE(id)    {const el=document.getElementById(id);if(el)el.classList.a
 function toast(msg,type='ti'){
   const icons={ts:'✅',te:'❌',ti:'ℹ️'};
   const c=document.getElementById('toasts');
+  if(!c)return;
   const t=document.createElement('div');
   t.className=`toast ${type}`;
   t.innerHTML=`<span style="font-size:16px">${icons[type]||'ℹ️'}</span><span>${esc(msg)}</span>`;
