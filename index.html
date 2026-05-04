@@ -483,9 +483,12 @@ window.addEventListener('load', async () => {
     if (event === 'SIGNED_IN') {
       S.user = session.user;
       await loadProfile();
+      go('dashboard');
+      await render();
     } else if (event === 'SIGNED_OUT') {
       S.user = null; S.profile = null; S.orders = [];
       go('');
+      await render();
     }
   });
 
@@ -779,15 +782,19 @@ function bindRegisto() {
     if (!ok) return;
     const btn = document.getElementById('rbtn');
     btn.disabled=true; btn.textContent='A criar conta...';
-    const { error } = await db.auth.signUp({
+    const { data: signUpData, error } = await db.auth.signUp({
       email: em, password: pw,
       options: { data: { name: nm } }
     });
     if (error) {
       btn.disabled=false; btn.textContent='Criar conta grátis';
-      showE('rg', error.message.includes('already registered')
-        ? 'Este email já está registado'
-        : 'Erro ao criar conta. Tente novamente.');
+      console.error('Supabase signUp error:', error);
+      let msg = 'Erro: ' + error.message;
+      if (error.message.includes('already registered') || error.message.includes('User already registered')) msg = 'Este email já está registado';
+      else if (error.message.includes('Password should be')) msg = 'Password: mínimo 6 caracteres';
+      else if (error.message.includes('Unable to validate')) msg = 'Email inválido';
+      else if (error.message.includes('signup is disabled') || error.message.includes('Signups not allowed')) msg = 'Registos desativados no Supabase — ative em Authentication → Providers → Email';
+      showE('rg', msg);
       return;
     }
     toast('Conta criada! Bem-vindo 🎉','ts');
