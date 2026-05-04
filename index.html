@@ -1118,7 +1118,7 @@ function tDetail(){
 <div style="margin-bottom:16px"><button class="btn btn-g btn-sm" onclick="go('dashboard')">← Voltar</button></div>
 <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:13px;margin-bottom:20px">
   <div><h1 class="pgh1">${esc(o.product_name)}</h1><div style="display:flex;align-items:center;gap:10px;margin-top:8px">${bdg(o.status)}<span style="color:var(--tx3);font-size:12px">Criado em ${fmtd(o.created_at)}</span></div></div>
-  ${canEdit?`<div style="display:flex;gap:9px"><button class="btn btn-s btn-sm" onclick="editOrder('${o.id}')">✏️ Editar</button><button class="btn btn-d btn-sm" onclick="confirmDel('${o.id}')">🗑️ Apagar</button></div>`:''}
+  ${canEdit?`<div style="display:flex;gap:9px"><button class="btn btn-s btn-sm" data-id="${o.id}" onclick="editOrder(this.dataset.id)">✏️ Editar</button><button class="btn btn-d btn-sm" data-id="${o.id}" onclick="confirmDel(this.dataset.id)">🗑️ Apagar</button></div>`:''}
 </div>
 <div class="dgrid">
   <div>
@@ -1279,7 +1279,7 @@ function ac(o){
   const userEmail=prof.email||'—';
   return `
 <div class="ac2" id="ac-${o.id}">
-  <div class="ah" onclick="toggleA('${o.id}')">
+  <div class="ah" data-id="${o.id}" onclick="toggleA(this.dataset.id)">
     <div class="oth">${o.image_url?`<img src="${o.image_url}" alt="">`:'📦'}</div>
     <div class="oin"><div class="on">${esc(o.product_name)}</div><div class="om">${esc(userName)} · ${fmtd(o.created_at)}</div></div>
     <div style="display:flex;align-items:center;gap:11px;flex-shrink:0">${bdg(o.status)}<div class="opr">€${Number(o.budget||0).toLocaleString('pt-PT')}</div><span id="ar-${o.id}" style="color:var(--tx3);font-size:16px;transition:transform .2s">›</span></div>
@@ -1303,7 +1303,7 @@ function ac(o){
     </div>
     <div style="margin-top:17px;padding-top:13px;border-top:1px solid var(--bd);display:flex;align-items:center;gap:11px;flex-wrap:wrap">
       <span style="font-size:12px;font-weight:700;color:var(--tx3)">Alterar estado:</span>
-      <select class="ssel" onchange="setStatus('${o.id}',this.value)">
+      <select class="ssel" data-id="${o.id}" onchange="setStatus(this.dataset.id,this.value)">
         <option value="pending"   ${o.status==='pending'  ?'selected':''}>⏳ Pendente</option>
         <option value="analysis"  ${o.status==='analysis' ?'selected':''}>🔍 Em análise</option>
         <option value="done"      ${o.status==='done'     ?'selected':''}>✅ Concluído</option>
