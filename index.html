@@ -876,7 +876,7 @@ function syncNav() {
 }
 function toggleSb(){S.sopen=!S.sopen;document.getElementById('sb').classList.toggle('open',S.sopen);document.getElementById('sbov').classList.toggle('open',S.sopen);}
 function closeSb(){S.sopen=false;document.getElementById('sb')?.classList.remove('open');document.getElementById('sbov')?.classList.remove('open');}
-async function logout(){await db.auth.signOut();toast('Sessão terminada','ti');}
+async function logout(){await db.auth.signOut();toast('Sessão terminada','ti');S.user=null;S.profile=null;S.orders=[];await render();}
 
 /* ════════════════════════════════════════════════════════════════
    DASHBOARD
@@ -1060,11 +1060,15 @@ async function submitOrder(){
   const btn=document.getElementById('sbtn');
   if(btn){btn.disabled=true;btn.textContent='A submeter...';}
   try {
+    // Verificar sessão antes de submeter
+    const { data: { session } } = await db.auth.getSession();
+    if(!session){ toast('Sessão expirada. Faça login novamente.','te'); go('login'); return; }
+
     const payload={
       user_id: S.user.id,
       product_name: d.product_name,
       description: d.description||'',
-      budget: Number(d.budget),
+      budget: d.budget ? Number(d.budget) : null,
       color: d.color||'',
       size: d.size||'',
       phone: d.phone||'',
@@ -1074,21 +1078,32 @@ async function submitOrder(){
       country:(d.addr||{}).country||'Portugal',
       status: 'pending'
     };
-    const order = await createOrder(payload);
+
+    console.log('Submitting payload:', payload);
+
+    const { data: orderData, error: orderError } = await db.from('orders').insert([payload]).select().single();
+    if(orderError){
+      console.error('Insert error:', orderError);
+      throw orderError;
+    }
+
     // Upload imagem se existir
     if(d.imgFile){
       try {
-        const url = await uploadImage(d.imgFile, order.id);
-        await updateOrder(order.id, { image_url: url });
-      } catch(e){ console.warn('Imagem não guardada:', e); }
+        const url = await uploadImage(d.imgFile, orderData.id);
+        await updateOrder(orderData.id, { image_url: url });
+      } catch(imgErr){ console.warn('Imagem não guardada:', imgErr); }
     }
     S.draft={};
     toast('Pedido submetido com sucesso! 🎉','ts');
+    await loadOrders();
     go('dashboard');
+    await render();
   } catch(e){
     if(btn){btn.disabled=false;btn.textContent='✓ Submeter pedido';}
-    toast('Erro ao submeter pedido. Tente novamente.','te');
-    console.error(e);
+    const msg = e?.message || e?.details || e?.hint || JSON.stringify(e);
+    toast('Erro: ' + msg, 'te');
+    console.error('submitOrder error full:', e);
   }
 }
 
@@ -1138,12 +1153,17 @@ function editOrder(id){
     saveStep();const d=S.draft;
     const btn=document.getElementById('sbtn');if(btn){btn.disabled=true;btn.textContent='A guardar...';}
     try{
-      const payload={product_name:d.product_name,description:d.description||'',budget:Number(d.budget),color:d.color||'',size:d.size||'',phone:d.phone||'',street:(d.addr||{}).street||'',postal:(d.addr||{}).postal||'',city:(d.addr||{}).city||'',country:(d.addr||{}).country||'Portugal'};
+      const payload={product_name:d.product_name,description:d.description||'',budget:d.budget?Number(d.budget):null,color:d.color||'',size:d.size||'',phone:d.phone||'',street:(d.addr||{}).street||'',postal:(d.addr||{}).postal||'',city:(d.addr||{}).city||'',country:(d.addr||{}).country||'Portugal'};
       if(d.imgFile){const url=await uploadImage(d.imgFile,window._eid);payload.image_url=url;}
       await updateOrder(window._eid,payload);
+      const idx=S.orders.findIndex(o=>o.id===window._eid);
+      if(idx!==-1)Object.assign(S.orders[idx],payload);
       window.submitOrder=orig;window._eid=null;
-      toast('Pedido atualizado!','ts');S.oid=id;go('pedido-'+id);
-    }catch(e){if(btn){btn.disabled=false;btn.textContent='✓ Guardar alterações';}toast('Erro ao guardar','te');}
+      toast('Pedido atualizado!','ts');
+      S.oid=id;
+      go('pedido-'+id);
+      await render();
+    }catch(e){if(btn){btn.disabled=false;btn.textContent='✓ Guardar alterações';}console.error('editOrder error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
   };
 }
 
@@ -1151,8 +1171,19 @@ function confirmDel(id){
   showModal('Apagar pedido?','Esta ação não pode ser desfeita.',[
     {l:'Cancelar',c:'btn-s',fn:closeModal},
     {l:'Apagar',c:'btn-d',fn:async()=>{
-      try{await deleteOrder(id);toast('Pedido apagado','ti');closeModal();go('dashboard');}
-      catch(e){toast('Erro ao apagar','te');}
+      try{
+        const {error}=await db.from('orders').delete().eq('id',id);
+        if(error)throw error;
+        S.orders=S.orders.filter(o=>o.id!==id);
+        toast('Pedido apagado','ti');
+        closeModal();
+        go('dashboard');
+        await render();
+      }catch(e){
+        console.error('deleteOrder error:',e);
+        toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');
+        closeModal();
+      }
     }}
   ]);
 }
@@ -1194,18 +1225,23 @@ function tPerfil(){
 async function savePerfil(){
   const nm=v('pn'),ph=v('pp');
   try{
-    await db.from('profiles').update({name:nm||S.profile?.name,phone:ph}).eq('id',S.user.id);
+    const {error}=await db.from('profiles').update({name:nm||S.profile?.name,phone:ph}).eq('id',S.user.id);
+    if(error)throw error;
     if(S.profile){S.profile.name=nm||S.profile.name;S.profile.phone=ph;}
     toast('Perfil atualizado!','ts');
-  }catch(e){toast('Erro ao guardar','te');}
+    // update sidebar name without full re-render
+    const unEl=document.querySelector('.sb-un');if(unEl)unEl.textContent=S.profile.name;
+    const avEl=document.querySelector('.av');if(avEl)avEl.textContent=(S.profile.name||'').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  }catch(e){console.error('savePerfil error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
 }
 async function saveMorada(){
   const payload={street:v('pst'),postal:v('pps'),city:v('pct'),country:document.getElementById('pco').value};
   try{
-    await db.from('profiles').update(payload).eq('id',S.user.id);
+    const {error}=await db.from('profiles').update(payload).eq('id',S.user.id);
+    if(error)throw error;
     if(S.profile)Object.assign(S.profile,payload);
     toast('Morada guardada!','ts');
-  }catch(e){toast('Erro ao guardar','te');}
+  }catch(e){console.error('saveMorada error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1283,11 +1319,12 @@ function toggleA(id){const b=document.getElementById('ab-'+id),r=document.getEle
 
 async function setStatus(id,st){
   try{
-    await updateOrder(id,{status:st});
+    const {error}=await db.from('orders').update({status:st}).eq('id',id);
+    if(error)throw error;
     const o=S.orders.find(o=>o.id===id);if(o)o.status=st;
     const c=document.getElementById('ac-'+id);if(c){const b=c.querySelector('.ah .badge');if(b)b.outerHTML=bdg(st);}
     toast('Estado: '+stLbl(st),'ts');
-  }catch(e){toast('Erro ao atualizar','te');}
+  }catch(e){console.error('setStatus error:',e);toast('Erro: '+(e?.message||e?.details||JSON.stringify(e)),'te');}
 }
 
 async function filterA(st){
